@@ -1,0 +1,14 @@
+.component {
+  min-height:81vh;
+}
+
+/* svg {
+  
+    filter: drop-shadow(1px 1px 0px #000000) drop-shadow(-1px 1px 0px #000000) drop-shadow(1px -1px 0px #000000) drop-shadow(-1px -1px 0px #000000) !important;
+  
+} */
+.logo-outline {
+  filter:drop-shadow(1px 1px 1px #000)
+}
+
+

@@ -1,0 +1,43 @@
+
+.App-logo {
+    height: 5vmin;
+  }
+  #mainNav .nav-link:hover{
+    text-decoration: underline;
+    background: #273D3A;
+  }
+  
+  #userNav .nav-link:hover{
+    text-decoration: underline;
+  }
+  .nav-link{
+    font-size: large;
+    letter-spacing: 1px;
+    height: auto;
+  }
+  
+  .shadow {
+    box-shadow: 1px 3px 11px 1px rgba(0,0,0,.7);
+  }
+  nav, .navbar{
+    background-color: #0f1716 !important;
+  }
+  .navbar-nav .nav-link{
+    padding:1rem 1rem;
+    }
+    
+  
+  
+  
+  
+  
+  @keyframes spin3D {
+    from { transform: rotateY(0deg) }
+    to { transform: rotateY(360deg) }
+  }
+  .spinhov3D:hover {
+    animation-name: spin3D;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+  }
