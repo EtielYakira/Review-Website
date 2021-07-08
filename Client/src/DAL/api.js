@@ -65,13 +65,6 @@ const getCategories = async () => {
     return response
 }
 
-//Reviews
-////GET FUNCTIONS
-// const getReviewByRId = async (reviewId) => {
-//     let review = await fetch(`http://localhost:9000/categories/${reviewId}`)
-//     let response =  review.json()
-//     return response
-// }
 
 const getReviewsOfPlaceByPlaceId = async (placeId) => {
     let reviews = await fetch(`http://localhost:9000/reviews/${placeId}`)
