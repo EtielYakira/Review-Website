@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import HomePage from './Components/HomePage'
-import Places from './Components/AllPlaces'
+import Place from './Components/Places'
 import Gallery from './Components/Community-Area/Gallery';
 import LeaderBoard from './Components/Community-Area/LeaderBoard';
 import Something from './Components/Community-Area/Something';
@@ -19,6 +19,7 @@ import {
   useParams
 } from "react-router-dom";
 import SignUp from './Components/SignUp';
+import PlacePage from './Components/All-Places-Components/PlacePage';
 
 
 function App() {
@@ -41,8 +42,9 @@ function App() {
       </Route>
       
       <Route path='/Places'> 
-        <Places/>
+        <Place/>
       </Route>
+
       <Route path='/Gallery'> 
         <Gallery/>
       </Route>

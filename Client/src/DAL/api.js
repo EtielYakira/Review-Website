@@ -88,4 +88,4 @@ const getReviewsOfPlaceByPlaceId = async (placeId) => {
 // const Pagination = async (pageToShow = 1, numberOfObjectsInPage = 25)
 
 
-export {getPlaces,getUserByUserName,getImagesOfReviewsWithImageLikes}
+export {getPlaces,getUserByUserName,getImagesOfReviewsWithImageLikes,getPlaceById}
