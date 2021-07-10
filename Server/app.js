@@ -15,6 +15,8 @@ const galleryRouter = require('./routes/gallery');
 
 const app = express();
 
+const db = require("./models");
+db.sequelize.sync();
 app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
