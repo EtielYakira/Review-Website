@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, InputGroup, Button, Col,Row } from "react-bootstrap";
+import { Modal, Form, InputGroup, Button, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -8,23 +8,40 @@ import { getTags, getCategories, postPlace } from "../DAL/api";
 function AddPlace() {
   const [tagsFromDb, setTagsFromDb] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [file,setFile] = useState("")
-  
+  const [file, setFile] = useState("");
+
   const handleFileChange = (e) => {
-    setFile(e.target.files[0])
-  }
+    setFile(e.target.files[0]);
+  };
   let today = () => {
-    let todayDate = (new Date(Date.now()).toLocaleDateString()).split("/").reverse()
-    console.log([todayDate[0],todayDate[2].length === 1 ? "0"+todayDate[2]:todayDate[2] ,todayDate[1]].join('-'));
-    return [todayDate[0],todayDate[2].length === 1 ? "0"+todayDate[2]:todayDate[2] ,todayDate[1]].join('-')
-  }
+    let todayDate = new Date(Date.now())
+      .toLocaleDateString()
+      .split("/")
+      .reverse();
+    console.log(
+      [
+        todayDate[0],
+        todayDate[2].length === 1 ? "0" + todayDate[2] : todayDate[2],
+        todayDate[1],
+      ].join("-")
+    );
+    return [
+      todayDate[0],
+      todayDate[2].length === 1 ? "0" + todayDate[2] : todayDate[2],
+      todayDate[1],
+    ].join("-");
+  };
   const schema = yup.object().shape({
     placeName: yup.string().required("And You dont have a name?"),
     ownerName: yup.string(),
     city: yup.string().required("i guess its in the sea so.."),
     country: yup.string().required("i dont know places in space!"),
     streetName: yup.string().required("i dont know places in space!"),
-    summeryText: yup.string().min(255,'tell just a little bit more').max(5000,'too muach').required("tell something about the place"),
+    summeryText: yup
+      .string()
+      .min(40, "tell just a little bit more")
+      .max(5000, "too muach")
+      .required("tell something about the place"),
     streetNumber: yup
       .number("its must to be number")
       .min(1)
@@ -43,9 +60,9 @@ function AddPlace() {
       tags: [],
       category: 1,
       establishDate: "",
-      openingHour:"",
-      closingHour:"",
-      summeryText:'',
+      openingHour: "",
+      closingHour: "",
+      summeryText: "",
     },
     validationSchema: schema,
     validator: () => ({}),
@@ -81,222 +98,275 @@ function AddPlace() {
 
   return (
     <div className="component justify-content-center">
+      <h2 className="text-center mt-4 text-decoration-underline fw-bolder">
+        New Place
+      </h2>
       <Form
         onSubmit={formik.handleSubmit}
-        className="p-5"
+        className="p-5 container"
         enctype="multipart/form-data"
       >
-        {formik.errors.placeName ? (
-          <div className="alert-danger text-danger text-center">
-            {formik.errors.placeName}
-          </div>
-        ) : null}
-        <InputGroup className="mb-4">
-          <InputGroup.Prepend>
-            <InputGroup.Text>Place name</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-            name="placeName"
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.placeName}
-            onBlur={formik.handleBlur}
-            isValid={formik.touched.placeName && !formik.errors.placeName}
-          />
-        </InputGroup>
+        <Row>
+          <Col lg="6" md="12">
+            {formik.errors.placeName ? (
+              <div className="alert-danger text-danger text-center">
+                {formik.errors.placeName}
+              </div>
+            ) : null}
+            <InputGroup className="mb-4">
+              <InputGroup.Prepend>
+                <InputGroup.Text>Place name</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                name="placeName"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.placeName}
+                onBlur={formik.handleBlur}
+                isValid={formik.touched.placeName && !formik.errors.placeName}
+              />
+            </InputGroup>
+          </Col>
+          <Col lg="6" md="12">
+            {formik.errors.ownerName ? (
+              <div className="alert-danger text-danger text-center">
+                {formik.errors.ownerName}
+              </div>
+            ) : null}
+            <InputGroup className="mb-4">
+              <InputGroup.Prepend>
+                <InputGroup.Text>Owner name</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                name="ownerName"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.ownerName}
+                onBlur={formik.handleBlur}
+              />
+            </InputGroup>
+          </Col>
+          <Col lg="3" md="6" sm="12">
+            {formik.errors.city ? (
+              <div className="alert-danger text-danger text-center">
+                {formik.errors.city}
+              </div>
+            ) : null}
+            <InputGroup className="mb-4">
+              <InputGroup.Prepend>
+                <InputGroup.Text>City</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                name="city"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.city}
+                onBlur={formik.handleBlur}
+                isValid={formik.touched.city && !formik.errors.city}
+              />
+            </InputGroup>
+          </Col>
 
-        {formik.errors.ownerName ? (
-          <div className="alert-danger text-danger text-center">
-            {formik.errors.ownerName}
-          </div>
-        ) : null}
-        <InputGroup className="mb-4">
-          <InputGroup.Prepend>
-            <InputGroup.Text>Owner name</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-            name="ownerName"
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.ownerName}
-            onBlur={formik.handleBlur}
-          />
-        </InputGroup>
+          <Col lg="3" md="6" sm="12">
+            {formik.errors.country ? (
+              <div className="alert-danger text-danger text-center">
+                {formik.errors.country}
+              </div>
+            ) : null}
+            <InputGroup className="mb-4">
+              <InputGroup.Prepend>
+                <InputGroup.Text>Country</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                name="country"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.country}
+                onBlur={formik.handleBlur}
+                isValid={formik.touched.country && !formik.errors.country}
+              />
+            </InputGroup>
+          </Col>
 
-        {formik.errors.city ? (
-          <div className="alert-danger text-danger text-center">
-            {formik.errors.city}
-          </div>
-        ) : null}
-        <InputGroup className="mb-4">
-          <InputGroup.Prepend>
-            <InputGroup.Text>City</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-            name="city"
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.city}
-            onBlur={formik.handleBlur}
-            isValid={formik.touched.city && !formik.errors.city}
-          />
-        </InputGroup>
+          <Col lg="3" md="6" sm="12">
+            {formik.errors.streetName ? (
+              <div className="alert-danger text-danger text-center">
+                {formik.errors.streetName}
+              </div>
+            ) : null}
+            <InputGroup className="mb-4">
+              <InputGroup.Prepend>
+                <InputGroup.Text>Street Name</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                name="streetName"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.streetName}
+                onBlur={formik.handleBlur}
+                isValid={formik.touched.streetName && !formik.errors.streetName}
+              />
+            </InputGroup>
+          </Col>
 
-        {formik.errors.country ? (
-          <div className="alert-danger text-danger text-center">
-            {formik.errors.country}
-          </div>
-        ) : null}
-        <InputGroup className="mb-4">
-          <InputGroup.Prepend>
-            <InputGroup.Text>Country</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-            name="country"
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.country}
-            onBlur={formik.handleBlur}
-            isValid={formik.touched.country && !formik.errors.country}
-          />
-        </InputGroup>
+          <Col lg="3" md="6" sm="12">
+            {formik.errors.streetNumber ? (
+              <div className="alert-danger text-danger text-center">
+                {formik.errors.streetNumber}
+              </div>
+            ) : null}
+            <InputGroup className="mb-4">
+              <InputGroup.Prepend>
+                <InputGroup.Text>Street Number</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                name="streetNumber"
+                type="number"
+                onChange={formik.handleChange}
+                value={formik.values.streetNumber}
+                onBlur={formik.handleBlur}
+                isValid={
+                  formik.touched.streetNumber && !formik.errors.streetNumber
+                }
+              />
+            </InputGroup>
+          </Col>
 
-        {formik.errors.streetName ? (
-          <div className="alert-danger text-danger text-center">
-            {formik.errors.streetName}
-          </div>
-        ) : null}
-        <InputGroup className="mb-4">
-          <InputGroup.Prepend>
-            <InputGroup.Text>Street Name</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-            name="streetName"
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.streetName}
-            onBlur={formik.handleBlur}
-            isValid={formik.touched.streetName && !formik.errors.streetName}
-          />
-        </InputGroup>
+          <Col lg="4" md="8">
+            <InputGroup className="mb-4">
+              <InputGroup.Prepend>
+                <InputGroup.Text>establish Date</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                name="establishDate"
+                type="date"
+                onChange={formik.handleChange}
+                value={formik.values.establishDate}
+                onBlur={formik.handleBlur}
+                max={today()}
+                // max={'2021-07-15'}
+                isValid={
+                  formik.touched.establishDate && !formik.errors.establishDate
+                }
+              />
+            </InputGroup>
+          </Col>
 
-        {formik.errors.streetNumber ? (
-          <div className="alert-danger text-danger text-center">
-            {formik.errors.streetNumber}
-          </div>
-        ) : null}
-        <InputGroup className="mb-4">
-          <InputGroup.Prepend>
-            <InputGroup.Text>Street Number</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-            name="streetNumber"
-            type="number"
-            onChange={formik.handleChange}
-            value={formik.values.streetNumber}
-            onBlur={formik.handleBlur}
-            isValid={formik.touched.streetNumber && !formik.errors.streetNumber}
-          />
-        </InputGroup>
+          <Col lg="4" md="8">
+            <InputGroup className="mb-4">
+              <InputGroup.Prepend>
+                <InputGroup.Text>Opening Hour</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                name="openingHour"
+                type="time"
+                onChange={formik.handleChange}
+                value={formik.values.openingHour}
+                onBlur={formik.handleBlur}
+                isValid={
+                  formik.touched.openingHour && !formik.errors.openingHour
+                }
+              />
+            </InputGroup>
+          </Col>
 
-        <InputGroup className="mb-4">
-          <InputGroup.Prepend>
-            <InputGroup.Text>establish Date</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-            name="establishDate"
-            type="date"
-            onChange={formik.handleChange}
-            value={formik.values.establishDate}
-            onBlur={formik.handleBlur}
-            max={today()}
-            // max={'2021-07-15'}
-            isValid={formik.touched.establishDate && !formik.errors.establishDate}
-          />
-        </InputGroup>
+          <Col lg="4" md="8">
+            <InputGroup className="mb-4">
+              <InputGroup.Prepend>
+                <InputGroup.Text>Closing Hour</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                name="closingHour"
+                type="time"
+                onChange={formik.handleChange}
+                value={formik.values.closingHour}
+                onBlur={formik.handleBlur}
+                isValid={
+                  formik.touched.closingHour && !formik.errors.closingHour
+                }
+              />
+            </InputGroup>
+          </Col>
 
-        <InputGroup className="mb-4">
-          <InputGroup.Prepend>
-            <InputGroup.Text>Opening Hour</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-            name="openingHour"
-            type="time"
-            onChange={formik.handleChange}
-            value={formik.values.openingHour}
-            onBlur={formik.handleBlur}
-            isValid={formik.touched.openingHour && !formik.errors.openingHour}
-          />
-        </InputGroup>
+          <Col lg="12">
+            {formik.errors.summeryText ? (
+              <div className="alert-danger text-danger text-center">
+                {formik.errors.summeryText}
+              </div>
+            ) : null}
+            <InputGroup className="mb-4">
+              <InputGroup.Prepend>
+                <InputGroup.Text className="py-5">Summery Text</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                name="summeryText"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.summeryText}
+                onBlur={formik.handleBlur}
+                isValid={
+                  formik.touched.summeryText && !formik.errors.summeryText
+                }
+              />
+            </InputGroup>
+          </Col>
 
-        <InputGroup className="mb-4">
-          <InputGroup.Prepend>
-            <InputGroup.Text>Closing Hour</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-            name="closingHour"
-            type="time"
-            onChange={formik.handleChange}
-            value={formik.values.closingHour}
-            onBlur={formik.handleBlur}
-            isValid={formik.touched.closingHour && !formik.errors.closingHour}
-          />
-        </InputGroup>
+          <Col>
+            <Form.Group className="mb-4">
+              <Form.Label>Place Picture</Form.Label>
 
-        <InputGroup className="mb-4">
-          <InputGroup.Prepend>
-            <InputGroup.Text>Summery Text</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-            name="summeryText"
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.summeryText}
-            onBlur={formik.handleBlur}
-            isValid={formik.touched.summeryText && !formik.errors.summeryText}
-          />
-        </InputGroup>
+              <Form.Control
+                type="file"
+                filename="image"
+                accept="image/png, image/jpeg, image/jpg"
+                onChange={handleFileChange}
+              />
+            </Form.Group>
+          </Col>
 
+          <Col>
+            <Form.Group>
+              <Row>
+                {tagsFromDb.map((tag) => (
+                  <Col>
+                    <Form.Check
+                      name="tags"
+                      type="checkbox"
+                      value={tag.id}
+                      onChange={formik.handleChange}
+                      label={tag.name}
+                    />
+                  </Col>
+                ))}
+              </Row>
+            </Form.Group>
+          </Col>
 
-        <Form.Group className="mb-4">
-          <Form.Label>Place Picture</Form.Label>
-
-          <Form.Control
-            type="file"
-            filename ='image'
-            accept="image/png, image/jpeg, image/jpg"
-            onChange={handleFileChange}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          {tagsFromDb.map((tag) => (
-            <Form.Check
-              name="tags"
-              type="checkbox"
-              value={tag.id}
+          <Col>
+            <Form.Label
+              className="my-1 mr-5"
+              htmlFor="inlineFormCustomSelectPref"
+            >
+              Category
+            </Form.Label>
+            <Form.Control
+              as="select"
+              name="category"
               onChange={formik.handleChange}
-              label={tag.name}
-            />
-          ))}
-        </Form.Group>
-        <Form.Label className="my-1 mr-5" htmlFor="inlineFormCustomSelectPref">
-          Category
-        </Form.Label>
-        <Form.Control
-          as="select"
-          name="category"
-          onChange={formik.handleChange}
-          className="my-1 mx-2"
-          id="inlineFormCustomSelectPref"
-          custom
-        >
-          {categories.map((category) => (
-            <option value={`${category.id}`}>{category.name}</option>
-          ))}
-        </Form.Control>
-          <Row>
-        <Button type="submit">Submit form</Button>
+              className="my-1 mx-2"
+              id="inlineFormCustomSelectPref"
+              custom
+            >
+              {categories.map((category) => (
+                <option value={`${category.id}`}>{category.name}</option>
+              ))}
+            </Form.Control>
+          </Col>
+        </Row>
+        <Row>
+          <Button type="submit">Submit form</Button>
         </Row>
       </Form>
     </div>

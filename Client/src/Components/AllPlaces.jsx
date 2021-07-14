@@ -129,7 +129,7 @@ const handleSearch = e =>{
                     {recordAfterPaginationAndSorting().length > 0 ?
                     recordAfterPaginationAndSorting().map(place => (
                         <TableRow as={Link} to={`Places/${place.id}`} key={place.id}>
-                            <TableCell><img src={place.image || 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.McCWaBPppsmGXSo0wC6XtAHaHa%26pid%3DApi&f=1'} alt='asd' className={classes.image}/></TableCell>
+                            <TableCell><img src={place.image.split("-")[0] === 'image' ? `../uploads/${place.image}` : 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.McCWaBPppsmGXSo0wC6XtAHaHa%26pid%3DApi&f=1'} alt='asd' className={classes.image}/></TableCell>
                             <TableCell className=''>{place.name}</TableCell>
                             <TableCell>{place.summeryText.substr(0,100)+"..."}</TableCell>
                             <TableCell>{place.rating|| 'no rating yet'}</TableCell>

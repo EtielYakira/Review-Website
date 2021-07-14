@@ -4,7 +4,7 @@ import ReviewCard from "./ReviewCard";
 
 function ReviewsList({reviews}) {
   return (
-    <Accordion className='m-4'>
+    <Accordion className='m-5'>
       <ol>
         {reviews.map((review,index) => <ReviewCard review={review} index={index} />)}
       </ol>
