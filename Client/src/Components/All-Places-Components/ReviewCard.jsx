@@ -3,9 +3,10 @@ import { useEffect } from 'react';
 import { Accordion, Card, Button, Image, Row, Col } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 import  {getUserByUserId} from '../../DAL/api'
+import Avatar from '@material-ui/core/Avatar';
 
 function ReviewCard({review,index}) {
-    const [user,setUser] = useState({})
+    const [user,setUser] = useState({name:"",})
     const handleUser = (userDetailes) => setUser(userDetailes)
     
     useEffect(() => {
@@ -20,13 +21,15 @@ function ReviewCard({review,index}) {
         <Card.Header>
           <Row>
             <Col lg="11">
+            <Avatar>{user.name[0]}</Avatar>
               <h3>
-                {" "}
+                {/* {" "}
                 <Image
                   style={{ width: "50px", height: "50px", borderRadius: "50%" }}
                   src={user.profileImage ? user.profileImage : 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.SbgWngnmy4T-r5FV7oqq4wHaIi%26pid%3DApi&f=1'}
                   alt="asdas"
-                />
+                /> */}
+                 
                 {user.name}
                 {new Array(review.rating).fill( <FaStar/> )}
               </h3>

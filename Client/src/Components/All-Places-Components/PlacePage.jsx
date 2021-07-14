@@ -9,17 +9,20 @@ import {BsStarFill} from 'react-icons/bs'
 import {GoVerified} from 'react-icons/go'
 import {BiCheckSquare} from 'react-icons/bi'
 import {FcCheckmark} from 'react-icons/fc'
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 function PlacePage() {
     const [addReview,setAddReview] = useState(false)
     const handleShowAddReview = () => addReview ? setAddReview(false) :setAddReview(true)
     const {placeId} = useParams()
-    const [place, setPlace] = useState({tags:[]})
+    const [place, setPlace] = useState({tags:[],image:'',averageRating:""})
 
     const handlePlace = (data) => setPlace(data)
     useEffect(() => {
         getPlaceById(placeId).then(data => {
-            data['averageRating'] = Math.floor(data.reviews.reduce((acc,curVal) => acc + curVal.rating,0)/data.reviews.length) || 'no rating yet'
+            data['averageRating'] = Math.ceil(data.reviews.reduce((acc,curVal) => acc + curVal.rating,0)/data.reviews.length) || 'no rating yet'
             handlePlace(data)
         })
         
@@ -40,7 +43,7 @@ function PlacePage() {
       <div className="row mx-1">
         <div className="col-12 mb-0">
           <figure className="">
-              <img src={`../uploads/${place.image}` || 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.McCWaBPppsmGXSo0wC6XtAHaHa%26pid%3DApi&f=1'} className="img-fluid rounded border border-dark" alt={place.name}/>
+              <img src={place.image.split("-")[0] === 'image' ? `../uploads/${place.image}` : 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.McCWaBPppsmGXSo0wC6XtAHaHa%26pid%3DApi&f=1'} className="img-fluid rounded border border-dark" alt={place.name}/>
           </figure>
         </div>
       </div>
@@ -50,9 +53,11 @@ function PlacePage() {
   <div className="col-md-6 container">
 
     <h5 className='bolder' style={{fontSize:'10vh'}}>{place.name}</h5>
-    <p className="mb-2 text-muted  small">owned by: {place.owner}</p>
+    <p className="mb-2 text-muted small">owned by: {place.owner}</p>
     <h3 className="">
-        {Array(place.averageRating).fill(0).map(elem => <span><BsStarFill/></span>)}  
+        {<Box component="fieldset"  borderColor="transparent">
+        <Rating name="read-only" size='large' value={place.averageRating} readOnly />
+      </Box>}  
     </h3>
     <p><span className="mr-1"><strong> {place.verified ? <GoVerified/> : 'Not '}Verified</strong></span></p>
 
@@ -106,10 +111,10 @@ function PlacePage() {
 
 
 
-             <Button onClick={handleShowAddReview}>add yor review here</Button>
-             {addReview && <AddReview handleShowAddReview={handleShowAddReview}/>}
             <h1 className="text-secondary text-center">Reviews</h1>
-            {place.reviews ? <ReviewsList reviews={place.reviews}/> : 'no reviews yey'}
+             <Button className='position-fixed' style={{bottom:'15px',right:'15px',zIndex:'3000'}} onClick={handleShowAddReview}>Add Review</Button>
+             {addReview && <AddReview handleShowAddReview={handleShowAddReview}/>}
+            {place.reviews ? <ReviewsList reviews={place.reviews} className='container'/> : 'no reviews yey'}
         </div>
     )
 }
