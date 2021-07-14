@@ -1,5 +1,5 @@
 const express = require("express");
-const connection = require("../models/db");
+const connection = require("../models2/db");
 const router = express.Router();
 
 router.get("/", function (req, res, next) {

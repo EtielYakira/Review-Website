@@ -20,13 +20,15 @@ import {
 } from "react-router-dom";
 import SignUp from './Components/SignUp';
 import PlacePage from './Components/All-Places-Components/PlacePage';
+import Cookies from 'js-cookie'
+import AddPlace from './Components/AddPlace'
 
 
 function App() {
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState(Cookies.get('session_id') ? JSON.parse(Cookies.get('session_id')) : '')
   const [expanded, setExpanded] = useState(false);
   const handleUser = (userId) => setUser(userId) 
-
+  console.log(user)
 
 
   const handelExpanded = (val) => setExpanded(val)
@@ -41,7 +43,7 @@ function App() {
         <HomePage/>
       </Route>
       
-      <Route path='/Places'> 
+      <Route path='/places'> 
         <Place/>
       </Route>
 
@@ -56,6 +58,9 @@ function App() {
       </Route>
       <Route path='/SignUp'> 
         <SignUp handleUser={handleUser}/>
+      </Route>
+      <Route path='/add-place'> 
+        <AddPlace/>
       </Route>
 
       <Route path='/'> 

@@ -38,7 +38,7 @@ function Header({expanded,handelExpanded,handleUser,user}) {
 
       <Nav id='mainNav' className="me-auto">
         <Nav.Link as={Link} to='/HomePage' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>Home</Nav.Link>
-        <Nav.Link as={Link} to='/Places' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>All Places</Nav.Link>
+        <Nav.Link as={Link} to='/places' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>All Places</Nav.Link>
         {!!user.name&&<NavDropdown title="Community Area" id="basic-nav-dropdown">
           <NavDropdown.Item as={Link} to='/Gallery' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>Gallery</NavDropdown.Item>
           <NavDropdown.Item as={Link} to='/LeaderBoard' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>Leader Board</NavDropdown.Item>

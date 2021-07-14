@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const User = require("../models2/user.model");
 
 // Create and Save a new user
 exports.create = (req, res) => {

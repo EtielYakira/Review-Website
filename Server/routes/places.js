@@ -1,7 +1,5 @@
 const express = require('express');
-const db = 'loopsi' //require('../DATA/places.json')
 const router = express.Router();
-// const getPlaces = require('../DATA/api')
 const mysql = require('mysql2');
 const connection = mysql.createConnection({
   host: 'localhost',

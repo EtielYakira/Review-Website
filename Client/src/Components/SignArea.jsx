@@ -34,19 +34,16 @@ function SignArea({ show, handleClose, handleUser, user }) {
     },
     validationSchema:SigninSchema,
     validator: () => ({}),
-    onSubmit: (values,actions) => {
-      let userDetails = getUserByUserName(values)
-      userDetails.then((userDetails) => { 
-      console.log(userDetails);
-      if(userDetails.message || userDetails.password !== values.password){
+    onSubmit: async  (values,actions) => {
+      const {data} = await getUserByUserName(values)
+      console.log(data);
+      if(data.message || data.password !== values.password){
         setTimeout(handleUserExisted("Username/password are Wrong, Try Again"),1000)
       }else{
         handleUserExisted("")
-        handleUser(userDetails)
+        handleUser(data)
         handleClose()
       }
-      
-    })
     },
   });
   return (

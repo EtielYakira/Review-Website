@@ -2,18 +2,114 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { getPlaceById } from '../../DAL/api'
+import ReviewsList from './ReviewsList'
+import {Button} from 'react-bootstrap'
+import AddReview from '../AddReview'
+import {BsStarFill} from 'react-icons/bs'
+import {GoVerified} from 'react-icons/go'
+import {BiCheckSquare} from 'react-icons/bi'
+import {FcCheckmark} from 'react-icons/fc'
 
 function PlacePage() {
+    const [addReview,setAddReview] = useState(false)
+    const handleShowAddReview = () => addReview ? setAddReview(false) :setAddReview(true)
     const {placeId} = useParams()
-    const [place, setPlace] = useState('')
+    const [place, setPlace] = useState({tags:[]})
+
+    const handlePlace = (data) => setPlace(data)
     useEffect(() => {
-        getPlaceById(placeId).then(data => setPlace(data))
+        getPlaceById(placeId).then(data => {
+            data['averageRating'] = Math.floor(data.reviews.reduce((acc,curVal) => acc + curVal.rating,0)/data.reviews.length) || 'no rating yet'
+            handlePlace(data)
+        })
+        
     }, [placeId])
+
+        
+    
 
     return (
         <div className='component'>
-            <h1 className="text-center"> {place.name}</h1>
-            <h1 className="text-center"> {place.id}</h1>
+
+
+
+<div className="container row mt-5 mx-auto">
+  <div className="col-md-6 mb-4">
+    <div id=""></div>
+    <div className="">
+      <div className="row mx-1">
+        <div className="col-12 mb-0">
+          <figure className="">
+              <img src={`../uploads/${place.image}` || 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.McCWaBPppsmGXSo0wC6XtAHaHa%26pid%3DApi&f=1'} className="img-fluid rounded border border-dark" alt={place.name}/>
+          </figure>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div className="col-md-6 container">
+
+    <h5 className='bolder' style={{fontSize:'10vh'}}>{place.name}</h5>
+    <p className="mb-2 text-muted  small">owned by: {place.owner}</p>
+    <h3 className="">
+        {Array(place.averageRating).fill(0).map(elem => <span><BsStarFill/></span>)}  
+    </h3>
+    <p><span className="mr-1"><strong> {place.verified ? <GoVerified/> : 'Not '}Verified</strong></span></p>
+
+    <p className="pt-1" style={{wordBreak:'break-all'}}>{place.summeryText}</p>
+    <div className="">
+      <table className="table table-sm table-borderless mb-0">
+        <tbody>
+          <tr>
+            <th className="pl-0 w-25" scope="row"><strong>Address</strong></th>
+            <td>{(place.streetName+" "+ place.streetNumber+"," + place.country).replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}</td>
+          </tr>
+          <tr>
+            <th className="pl-0 w-25" scope="row"><strong>Opens at:</strong></th>
+            <td>{place.openingHour}</td>
+          </tr>
+          <tr>
+            <th className="pl-0 w-25" scope="row"><strong>Closes at:</strong></th>
+            <td>{place.closingHour}</td>
+          </tr>
+          <tr>
+            <th className="pl-0 w-25" scope="row"><strong>Establish at:</strong></th>
+            <td>{place.establishDate}</td>
+          </tr>
+          <tr>
+            <th className="pl-0 w-25" scope="row"></th>
+            <td>{place.tags.map(tag => <span className='mx-1 fw-bolder text-decoration-underline'><FcCheckmark/>{tag.name}</span>)}</td>
+            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+            <br/>
+            <br/>
+
+
+
+
+
+
+             <Button onClick={handleShowAddReview}>add yor review here</Button>
+             {addReview && <AddReview handleShowAddReview={handleShowAddReview}/>}
+            <h1 className="text-secondary text-center">Reviews</h1>
+            {place.reviews ? <ReviewsList reviews={place.reviews}/> : 'no reviews yey'}
         </div>
     )
 }
