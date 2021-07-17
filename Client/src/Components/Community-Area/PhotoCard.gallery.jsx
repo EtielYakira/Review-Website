@@ -3,14 +3,13 @@ import {Col,Row,Card} from 'react-bootstrap'
 import {FcLike,FcLikePlaceholder,FcDislike} from 'react-icons/fc'
 
 
-function PhotoCard(image) {
+function PhotoCard({image}) {
   return (
-    <div>
       <Col lg={4} md={6} xs={12} className="my-2">
-        <Card border="info">
+        <Card border="info" >
           <Card.Img
             variant="top"
-            src={image.image}
+            src={`../uploads/${image.image}`}
           />
           <Card.Footer style={{ padding: ".75rem 1.25rem" }}>
             <Row>
@@ -18,12 +17,12 @@ function PhotoCard(image) {
                 {" "}
                 <small className="">
                   <cite>
-                    <strong>ETLusername</strong>
+                    <strong>{image.userName}</strong>
                   </cite>{" "}
                   on{" "}
                   <strong>
                     <a href="#1" alr="asd">
-                      asdasd
+                      {image.placeName}
                     </a>
                   </strong>
                 </small>
@@ -43,7 +42,6 @@ function PhotoCard(image) {
           </Card.Footer>
         </Card>
       </Col>
-    </div>
   );
 }
 
