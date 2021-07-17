@@ -1,6 +1,7 @@
 import React from 'react'
 
-function LeaderBorad() {
+function LeaderBoard() {
+    
     return (
         <div className='component'>
             <h1>i am Leader Board</h1>
@@ -8,4 +9,4 @@ function LeaderBorad() {
     )
 }
 
-export default LeaderBorad
+export default LeaderBoard

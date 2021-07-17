@@ -22,6 +22,8 @@ import SignUp from './Components/SignUp';
 import PlacePage from './Components/All-Places-Components/PlacePage';
 import Cookies from 'js-cookie'
 import AddPlace from './Components/AddPlace'
+import AuthApi from './Components/aute/Auth';
+import Protected from './Components/aute/Protected';
 
 
 function App() {
@@ -39,6 +41,10 @@ function App() {
       <Header expanded={expanded} handelExpanded={handelExpanded} user={user} handleUser={handleUser}/>
 
       <Switch>
+      <Route exact path='/'> 
+        <HomePage/>
+      </Route>
+        <AuthApi.Provider value={{user,handleUser}} >
       <Route path='/HomePage'> 
         <HomePage/>
       </Route>
@@ -47,25 +53,18 @@ function App() {
         <Place/>
       </Route>
 
-      <Route path='/Gallery'> 
-        <Gallery/>
-      </Route>
-      <Route path='/LeaderBoard'> 
-        <LeaderBoard/>
-      </Route>
-      <Route path='/Something'> 
-        <Something/>
-      </Route>
+     <Protected path='/Gallery' component={Gallery} />
+     <Protected path='/LeaderBoard' component={LeaderBoard} />
+     <Protected path='/Something' component={Something} />
+
       <Route path='/SignUp'> 
         <SignUp handleUser={handleUser}/>
       </Route>
-      <Route path='/add-place'> 
-        <AddPlace/>
-      </Route>
 
-      <Route path='/'> 
-        <HomePage/>
-      </Route>
+      <Protected path='/add-place' component={AddPlace} />
+
+    
+      </AuthApi.Provider>
         </Switch>
 
       <Footer/>

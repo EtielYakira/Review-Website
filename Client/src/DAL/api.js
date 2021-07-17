@@ -23,6 +23,17 @@ const postPlace = async (values) => {
 
 }
 
+const postReview = async (values) => {
+    const data = await axios.post('http://localhost:9000/reviews',values,config)
+    .catch(err => console.log(err))
+
+}
+const postUser  = async (values) => {
+    const data = await axios.post('http://localhost:9000/users',values,config)
+    .catch(err => console.log(err))
+
+}
+
 
 //Users
 ////GET FUNCTIONS
@@ -128,4 +139,4 @@ const getReviewsOfPlaceByPlaceId = async (placeId) => {
 
 // const Pagination = async (pageToShow = 1, numberOfObjectsInPage = 25)
 
-export {postPlace,getCategories,getPlaces,getUserByUserName,getImagesOfReviewsWithImageLikes,getPlaceById,getUserByUserId,getTags}
+export {postUser,postReview,postPlace,getCategories,getPlaces,getUserByUserName,getImagesOfReviewsWithImageLikes,getPlaceById,getUserByUserId,getTags}

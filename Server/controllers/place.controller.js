@@ -24,7 +24,6 @@ exports.createPlace = (req,res) => {
     categoryId: req.body.category,
   })
     .then((place) => {
-      console.log(req.body);
       console.log(">> Created place: " + JSON.stringify(place, null, 4));
       req.body.tags.split(',').forEach(tag => Place_tags.create({
         tagId:+tag,

@@ -18,13 +18,6 @@ function AddPlace() {
       .toLocaleDateString()
       .split("/")
       .reverse();
-    console.log(
-      [
-        todayDate[0],
-        todayDate[2].length === 1 ? "0" + todayDate[2] : todayDate[2],
-        todayDate[1],
-      ].join("-")
-    );
     return [
       todayDate[0],
       todayDate[2].length === 1 ? "0" + todayDate[2] : todayDate[2],
@@ -67,7 +60,6 @@ function AddPlace() {
     validationSchema: schema,
     validator: () => ({}),
     onSubmit: async (values, actions) => {
-      console.log(values);
       const formData = new FormData();
       formData.append("name", values.placeName);
       formData.append("owner", values.ownerName);

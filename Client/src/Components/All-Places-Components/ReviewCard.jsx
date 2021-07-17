@@ -58,7 +58,7 @@ function ReviewCard({review,index}) {
                 {review.reviewBody}
             </Row>
            {review.images.map((image,index) => (
-             <a href={image.image} target='_blank' rel='noreferrer'><img src={image.image} alt={`photo_number_${index}`} className="m-2 reviewImg" /></a>
+             <a href={`../uploads/${image.image}`} target='_blank' rel='noreferrer'><img src={`../uploads/${image.image}`} alt={`photo_number_${index}`} className="m-2 reviewImg" /></a>
            ))}
           </Card.Body>
         </Accordion.Collapse>
