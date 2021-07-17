@@ -9,12 +9,13 @@ exports.createUser = (req,res) => {
         password:req.body.password,
         email:req.body.email,
         subscription:req.body.subscription,
-        profileImage:req.body.profileImage,
+        profileImage:req.file.filename,
         preferredCategory:req.body.preferredCategory,
     })
       .then((user) => {
         console.log(">> Created user: " + JSON.stringify(user, null, 4));
-         res.send(user);
+        res.cookie('session_id', JSON.stringify({id:user.id,name:user.name}), {expire: 36000 + Date.now()})
+         res.send({id:user.id,name:user.name});
       })
       .catch((err) => {
         console.log(">> Error while creating user: ", err);

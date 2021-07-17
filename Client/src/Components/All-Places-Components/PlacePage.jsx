@@ -113,7 +113,7 @@ function PlacePage() {
 
             <h1 className="text-secondary text-center">Reviews</h1>
              <Button className='position-fixed' style={{bottom:'15px',right:'15px',zIndex:'3000'}} onClick={handleShowAddReview}>Add Review</Button>
-             {addReview && <AddReview handleShowAddReview={handleShowAddReview}/>}
+             {addReview && <AddReview handleShowAddReview={handleShowAddReview} placeId={placeId}/>}
             {place.reviews ? <ReviewsList reviews={place.reviews} className='container'/> : 'no reviews yey'}
         </div>
     )

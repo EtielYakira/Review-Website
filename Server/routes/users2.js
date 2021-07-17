@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const users = require("../controllers/user2.controller.js");
 const auth = require('../auth/auth')
+const upload = require('../upload/upload')
+
+
 
 
 router.route("/signin")
@@ -11,7 +14,7 @@ router.route("/:userId")
       .put(users.update)
       .delete(users.delete);
 router.route("/")
-      .post(users.createUser)
+      .post(upload.single("profileImage"),users.createUser)
       .get(users.findAll)
 
 module.exports = router;

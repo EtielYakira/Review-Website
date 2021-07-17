@@ -6,6 +6,8 @@ import * as yup from "yup";
 import { getUserByUserName } from "../DAL/api";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
 
 function SignArea({ show, handleClose, handleUser, user }) {
 
@@ -26,6 +28,8 @@ function SignArea({ show, handleClose, handleUser, user }) {
       .max(255,"how can you remember password so long??")
       .required("Required"),
   });
+  let history = useHistory();
+
 
   const formik = useFormik({
     initialValues: {
@@ -41,6 +45,7 @@ function SignArea({ show, handleClose, handleUser, user }) {
         setTimeout(handleUserExisted("Username/password are Wrong, Try Again"),1000)
       }else{
         handleUserExisted("")
+        history.push("/")
         handleUser(data)
         handleClose()
       }

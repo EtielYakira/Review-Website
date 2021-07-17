@@ -7,7 +7,6 @@ function Gallery() {
         <div className='component'>
             <h1>i am Gallary</h1>
 
-            {getImagesOfReviewsWithImageLikes().then(data => data.map())}
         </div>
     )
 }
