@@ -27,15 +27,17 @@ function AddReview({ handleShowAddReview, placeId }) {
       reviewBody: "",
     },
     onSubmit: (values) => {
-      const formData = new FormData();
-      formData.append("rating", +values.rating);
-      formData.append("reviewBody", values.reviewBody);
-      formData.append("placeId", placeId);
+      const formDataToSend = new FormData();
+      formDataToSend.append("rating", +values.rating);
+      formDataToSend.append("reviewBody", values.reviewBody);
+      formDataToSend.append("placeId", placeId);
       
-      formData.append("images", files);
-      // console.log(typeof files);
+      for(let i = 0; i < files.length; i++ ){
+        formDataToSend.append("reviewImages", files[i]);
+      }
+      console.log(formDataToSend);
 
-      postReview(formData).then((data) => console.log("review added"));
+      postReview(formDataToSend).then((data) => console.log("review added"));
       // handleShowAddReview(false);
     },
   });
@@ -86,7 +88,7 @@ function AddReview({ handleShowAddReview, placeId }) {
         <Col>
           <input
             type="file"
-            name="images"
+            name="reviewImages"
             multiple
             onChange={handleFilesChange}
           />
