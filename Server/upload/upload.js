@@ -1,23 +1,23 @@
 const multer = require('multer');
 const path = require('path');
-const util = require('util')
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
   destination: './../Client/public/uploads/',
   filename: function(req, file, cb){
-    console.log(file,'KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK');
+    console.log(req,'EREERRRRREEEEQQQQQQQQQQQQQQQQQQQQQQ');
+    console.log(file,'FILEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
     cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 
 // Init Upload
 const upload = multer({
-  storage: storage,
+  storage: storage
   
-  fileFilter: function(req, file, cb){
-    checkFileType(file, cb);
-  }
+  // fileFilter: function(req, file, cb){
+  //   checkFileType(file, cb);
+  // }
 })
 
 // Check File Type

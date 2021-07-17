@@ -49,11 +49,21 @@ db.places.hasMany(db.reviews, { as: "reviews" });
 db.reviews.belongsTo(db.places, {foreignKey: "placeId", as: "place",});
 
 db.reviews.hasMany(db.images, { as: "images" });
-db.images.belongsTo(db.images, {foreignKey: "reviewId", as: "review",});
+db.images.belongsTo(db.reviews, {foreignKey: "reviewId", as: "review",});
+// 
+// db.images.hasMany(db.reviews, { as: "reviews" });
 
 
-db.reviews.hasOne(db.users,{as:'user',foreignKey:'id'})
-db.users.belongsTo(db.reviews,{foreignKey:'userId',as:'user'})
+// db.reviews.hasMany(db.users,{as:'user',otherKey:'userId'})
+// db.users.belongsTo(db.reviews,{foreignKey:'userId',as:'user'})
+
+// WORKS BETTER
+
+db.users.hasMany(db.reviews,{as:'user',otherKey:'userId'})
+db.reviews.belongsTo(db.users,{foreignKey:'userId',as:'user'})
+// ?working
+// db.reviews.hasOne(db.users,{as:'user',foreignKey:'id'})
+// db.users.belongsTo(db.reviews,{foreignKey:'userId',as:'user'})
 
 
 db.places.belongsToMany(db.tags, {
@@ -67,6 +77,16 @@ db.tags.belongsToMany( db.places, {
   as: "places",
   foreignKey: "tagId",
 });
+
+// db.images.belongsToMany(db.reviews, {
+//   through: "images_likes",
+//   foreignKey: "imageId",
+// });
+
+// db.users.belongsToMany( db.images, {
+//   through: "images_likes",
+//   foreignKey: "userId",
+// });
 
 
 

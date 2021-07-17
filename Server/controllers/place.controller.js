@@ -192,3 +192,33 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.findAllForGallery = (req, res) => {
+return Place.findAll({
+  attributes: ["id","name"],
+  include: [
+    {
+      model: Review,
+      attributes: ["id"],
+      as: "reviews",
+
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ['id',"name"],
+        },
+        {
+          model: Image,
+          as: "images",
+          attributes: ["id","image"],
+        },
+      ],
+    },
+  ],
+})
+  .then((places) => {
+    res.send(places);
+  })
+  .catch((err) => console.log(err));
+};

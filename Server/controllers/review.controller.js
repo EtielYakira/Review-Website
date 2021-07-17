@@ -6,13 +6,13 @@ exports.createReview = (req,res) => {
     
     return Review.create({
         placeId:req.body.placeId,
-        userId:JSON.parse(req.cookies.session_id).id,
+        userId:`${JSON.parse(req.cookies.session_id).id}`,
         postDate:Date.now(),
         rating:req.body.rating,
         reviewBody:req.body.reviewBody,
     })
       .then((review) => {
-          console.log(req.files);
+          console.log(req.files,'list of files!!!!');
           for (let index = 0; index < req.files.length; index++) {
             reviewImages.create({
                 reviewId:review.id,

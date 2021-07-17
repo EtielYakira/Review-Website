@@ -14,6 +14,7 @@ const categoriesRouter = require('./routes/categories');
 const usersRouter = require('./routes/users2');
 const placesRouter = require('./routes/places2');
 const galleryRouter = require('./routes/gallery');
+const imagesRouter = require('./routes/images');
 const reviewsRouter = require('./routes/reviews');
 
 const app = express();
@@ -33,6 +34,7 @@ app.use('/places', placesRouter)
 app.use('/tags', tagsRouter)
 app.use('/categories', categoriesRouter)
 app.use('/gallery', galleryRouter)
+app.use('/images', imagesRouter)
 app.use('/reviews', reviewsRouter)
 
 
