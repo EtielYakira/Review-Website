@@ -15,7 +15,7 @@ exports.createUser = (req,res) => {
       .then((user) => {
         console.log(">> Created user: " + JSON.stringify(user, null, 4));
         res.cookie('session_id', JSON.stringify({id:user.id,name:user.name}), {expire: 36000 + Date.now()})
-         res.send({id:user.id,name:user.name});
+        res.send({id:user.id,name:user.name});
       })
       .catch((err) => {
         console.log(">> Error while creating user: ", err);
@@ -43,9 +43,11 @@ exports.createUser = (req,res) => {
   };
 
   exports.update = (req, res) => {
-    const id = req.params.id;
+    const id = JSON.parse(req.cookies.session_id).id
+    console.log('the ID IS >>>>>>>>>>>',id);
+    console.log(req.body);
   
-    User.update(req.body, {
+    return User.update(req.body, {
       where: { id: id }
     })
       .then(num => {

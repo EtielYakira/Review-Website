@@ -34,6 +34,12 @@ const postUser  = async (values) => {
 
 }
 
+const updateUser  = async (userId,values) => {
+    const data = await axios.put(`http://localhost:9000/users/${userId}`,values,config)
+    .catch(err => console.log(err))
+
+}
+
 
 //Users
 ////GET FUNCTIONS
@@ -139,4 +145,4 @@ const getReviewsOfPlaceByPlaceId = async (placeId) => {
 
 // const Pagination = async (pageToShow = 1, numberOfObjectsInPage = 25)
 
-export {postUser,postReview,postPlace,getCategories,getPlaces,getUserByUserName,getImagesOfReviewsWithImageLikes,getPlaceById,getUserByUserId,getTags}
+export {getUsers,updateUser,postUser,postReview,postPlace,getCategories,getPlaces,getUserByUserName,getImagesOfReviewsWithImageLikes,getPlaceById,getUserByUserId,getTags}

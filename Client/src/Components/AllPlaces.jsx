@@ -104,7 +104,7 @@ const handleSearch = e =>{
   
    
     return (
-        <TableContainer component={Paper}>
+        <TableContainer className='w-100' component={Paper}>
             <Container>
         <div className='component  mt-4'>
             {/* <Row className='mx-auto p-5'>

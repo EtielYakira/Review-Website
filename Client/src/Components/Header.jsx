@@ -50,7 +50,7 @@ function Header({expanded,handelExpanded,handleUser,user}) {
 
       <Nav className='ml-auto' activeKey={1} id='userNav'>
       {!user.name&&<Nav.Link  eventKey={1} onClick={handleShow}>Sign-in</Nav.Link>}
-      {!!user.name&&<Nav.Link  eventKey={1} >hi,{user.name}</Nav.Link>}
+      {!!user.name&&<Nav.Link as={Link} to='/profile' eventKey={1} >hi,{user.name}</Nav.Link>}
         <SignArea user={user} show={show} handleClose={() => setTimeout(() => {handelExpanded(false);handleClose()}, 50) } handleUser={handleUser} />
       {!!user.name&&<Nav.Link onClick={handleSignOutShow}>Logout</Nav.Link>}
       <Sginout  handleClose={handleSignOutClose} show={showSignOut} handleUser={handleUser}/>

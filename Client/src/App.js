@@ -24,7 +24,7 @@ import Cookies from 'js-cookie'
 import AddPlace from './Components/AddPlace'
 import AuthApi from './Components/aute/Auth';
 import Protected from './Components/aute/Protected';
-
+import UserProfile from './Components/UserProfile'
 
 function App() {
   const [user, setUser] = useState(Cookies.get('session_id') ? JSON.parse(Cookies.get('session_id')) : '')
@@ -52,7 +52,7 @@ function App() {
       <Route path='/places'> 
         <Place/>
       </Route>
-
+      <Protected path='/profile' component={UserProfile}/>
      <Protected path='/Gallery' component={Gallery} />
      <Protected path='/LeaderBoard' component={LeaderBoard} />
      <Protected path='/Something' component={Something} />

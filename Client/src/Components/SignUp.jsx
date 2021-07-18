@@ -33,6 +33,7 @@ function SignUp({handleUser}) {
   const [categories, setCategories] = useState([])
   const [file, setFile] = useState(null);
   let history = useHistory();
+  
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };

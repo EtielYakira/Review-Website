@@ -89,12 +89,12 @@ function Gallery() {
 
 
 <div className={classes.root}>
-      <ImageList rowHeight={360} className={classes.imageList} cols={3}>
+      <ImageList rowHeight={360} className={classes.imageList} cols={2}>
         {galleryData.map((item) => (
           <ImageListItem key={item.image}>
             <img src={`../uploads/${item.image}`} alt={item.placeName} />
             <ImageListItemBar
-              title={item.placeName}
+              title={<span>Place: {item.placeName}</span>}
               subtitle={<span>by: {item.userName}</span>}
               actionIcon={
                   <IconButton aria-label={`info about ${item.placeName}`} className={classes.icon}>

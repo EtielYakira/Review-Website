@@ -34,3 +34,160 @@
   width: 150px;
   height: 150px;
 }
+
+
+
+
+
+.slider-container {
+  border-radius : 25px;
+  display : flex;
+  width : 15em;
+  margin-left: auto;
+  margin-right: auto;
+  background-color : white;
+  color : gainsboro;
+}
+
+.slider-container .option {
+  border-radius : 25px;
+  width : 5em;
+  margin : 0em;
+  padding : .5em;
+  text-align : center;
+}
+
+.slider-container .option.highlighted {
+  background-color : red;
+  color : white;
+}
+
+
+
+
+.podium-places-container {
+  display: flex;
+  width : 90%;
+  margin-left: auto;
+  margin-right : auto;
+  justify-content : center;
+}
+
+.podium {
+  display : grid;
+  grid-template-columns: 1fr 3fr;
+  width : 15em;
+  background-color : white;
+  margin : 2.5em;
+  border-radius : 40px;
+  color : black;
+}
+
+.podium .position {
+  border-right-style: solid;
+  border-color: white;
+  border-width : .4em;
+
+}
+
+.podium .position {
+  width : 5em;
+  position : relative;
+}
+
+.podium.gold .position {
+  width : 7em;
+}
+
+.podium .class-information {
+ padding : 1em;
+}
+
+.podium.bronze, .podium.silver {
+  width : 17.5em;
+  height : 10em;
+  margin-top : 5em;
+}
+
+.podium.silver .position div,
+.podium.bronze .position div {
+  position : absolute;
+  top : .4em;
+  left : .2em;
+  font-size : 5em;
+}
+
+.podium.gold .position div {
+  position : absolute;
+  top : .3em;
+  left : .2em;
+  font-size : 8em;
+}
+
+
+
+.podium.bronze .class-information .title, .podium.silver .class-information .title {
+  margin-top : .5em;
+  font-size : 1.5em;
+}
+
+.podium.bronze .class-information .steps, .podium.silver .class-information .steps {
+  margin-top : .5em;
+  font-size : 1.5em;
+}
+
+.podium.gold .class-information .title {
+  margin-top : .5em;
+  font-size : 3em;
+}
+
+.podium.gold .class-information .steps {
+  margin-top : .5em;
+  font-size : 3em;
+}
+
+
+
+.podium.bronze {
+  background-color : #956D49;
+}
+
+.podium.silver {
+  background-color :  #9DA2AD;
+}
+
+.podium.gold {
+  background-color : #d3b139;
+  height : 15em;
+  width : 30em;
+}
+.bronze {
+  background-color : #956D49;
+}
+
+.silver {
+  background-color :  #9DA2AD;
+}
+
+.gold {
+  background-color : #d3b139;
+}
+
+@media (max-width: 575.98px) {
+
+  .podium.gold {
+    background-color : #d3b139;
+  }
+
+  
+.podium.gold .class-information .title {
+  margin-top : .5em;
+  font-size : 1.5em;
+}
+
+.podium.gold .class-information .steps {
+  margin-top : .5em;
+  font-size : 1.5em;
+}
+
+ }
