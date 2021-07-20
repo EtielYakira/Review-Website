@@ -1,15 +1,33 @@
 import React, { useEffect, useState, useRef } from "react";
-import { getPlaceById, getPlaces } from "../DAL/api";
+import { getPlaceById, getPlaces, getUsers } from "../DAL/api";
 import { Row, Col, Table, Carousel } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
+import {MdRateReview} from 'react-icons/md'
+import {GoVerified} from 'react-icons/go'
+import {FaUserFriends,FaMapMarked} from 'react-icons/fa'
 
 function HomePage() {
   const [display, setDisplay] = useState(false);
   const [options, setOptions] = useState([]);
   const [search, setSearch] = useState("");
   const wrapperRef = useRef(null);
-
+  const [NUMBERS_DATA,setNUMBERS_DATA] = useState({}) 
   let history = useHistory();
+  const handleNumber = (values) => setNUMBERS_DATA({...NUMBERS_DATA,...values})
+
+useEffect(() => {
+  
+  getUsers().then(data => handleNumber({users:data.length}))
+  getPlaces().then(data => {
+    let places = data.length
+    let placesVerified = data.filter(place => place.verified === 1).length
+    let reviews = data.reduce((acc,currValue) => acc + currValue.reviews.length,0) 
+    handleNumber({places,placesVerified,reviews})
+  })
+}, [])
+
+
+
   useEffect(() => {
     let totalReviews = 0;
     const places = [];
@@ -75,6 +93,7 @@ function HomePage() {
           onBlur={() => setTimeout(() => setDisplay(!display),100)}
           value={search}
           onChange={(event) => setSearch(event.target.value)}
+          style={{height:'50px'}}
         />
         {display && (
           <Table className="" striped bordered hover>
@@ -138,49 +157,50 @@ function HomePage() {
             </div>
         </div>
 
-        <Row className="justify-content-center">
-          <Carousel className="">
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.VCU6DnChG08YSvVgmAhQYgHaE8%26pid%3DApi&f=1"
-                alt="First slide"
-              />
-              <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.VCU6DnChG08YSvVgmAhQYgHaE8%26pid%3DApi&f=1"
-                alt="Second slide"
-              />
-
-              <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.VCU6DnChG08YSvVgmAhQYgHaE8%26pid%3DApi&f=1"
-                alt="Third slide"
-              />
-
-              <Carousel.Caption>
-                <h3>Third slide label</h3>
-                <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl
-                  consectetur.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel>
+        <Row className="w-75 mx-auto">
+        <div className="container mt-2">
+    <div className="row">
+        <div className="col-md-4 col-xl-3">
+            <div className="card bg-c-blue order-card">
+                <div className="card-block">
+                    <h6 className="m-b-20">More Then</h6>
+                    <h2 className="text-right"><i className="fa fa-credit-card f-left"></i><span>{NUMBERS_DATA.places-1}</span><span className="f-right"><FaMapMarked size='80px'/></span></h2>
+                    <p className="m-b-0">Places Added<span className="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div className="col-md-4 col-xl-3">
+            <div className="card bg-c-green order-card">
+                <div className="card-block">
+                    <h6 className="m-b-20">More Then</h6>
+                    <h2 className="text-right"><i className="fa fa-credit-card f-left"></i><span>{NUMBERS_DATA.placesVerified-1}</span><span className="f-right"><GoVerified size='80px'/></span></h2>
+                    <p className="m-b-0">Verified Places<span className="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div className="col-md-4 col-xl-3">
+            <div className="card bg-c-yellow order-card">
+                <div className="card-block">
+                    <h6 className="m-b-20">More Then</h6>
+                    <h2 className="text-right"><i className="fa fa-credit-card f-left"></i><span>{NUMBERS_DATA.users-1}</span><span className="f-right"><FaUserFriends size='80px'/></span></h2>
+                    <p className="m-b-0">Signed Users<span className="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div className="col-md-4 col-xl-3">
+            <div className="card bg-c-pink order-card">
+                <div className="card-block">
+                    <h6 className="m-b-20">More Then</h6>
+                    <h2 className="text-right"><i className="fa fa-credit-card f-left"></i><span>{NUMBERS_DATA.reviews-1}</span><span className="f-right"><MdRateReview size='80px'/></span></h2>
+                    <p className="m-b-0">Different Reviews<span className="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
         </Row>
       </div>
     </div>

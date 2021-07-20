@@ -53,7 +53,7 @@ function LeaderBoard() {
 
                                         <td className='fw-bolder'>
                                             {user.name}
-                                        {<img className='d-none d-lg-block' alt={index} style={{height:'100px',border:'1px solid black'}} src={`../uploads/${user.img}`} />}
+                                        {<img className='d-none d-lg-block' alt={index} style={{height:'50px',width:'50px',borderRadius:'50%'}} src={`../uploads/${user.img}`} />}
                                         </td>
                                         <td className='text-primary' >
                                             {user.numberOfReviews}
