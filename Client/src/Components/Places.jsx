@@ -9,14 +9,14 @@ import {
 import PlacePage from "./All-Places-Components/PlacePage";
 import Places from "./AllPlaces";
 
-function Place() {
+function Place({handleShow}) {
   let match = useRouteMatch();
 
   return (
     <div>
       <Switch>
         <Route path={`${match.path}/:placeId`}>
-          <PlacePage />
+          <PlacePage handleShow={handleShow}/>
         </Route>
         <Route path={match.path}>
           <Places/>

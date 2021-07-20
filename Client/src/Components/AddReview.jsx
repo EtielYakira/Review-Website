@@ -1,12 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { useFormik } from "formik";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { postReview } from "../DAL/api";
+import { postReview,getReviewById,updateReview,deleteImageById} from "../DAL/api";
+import { useHistory } from "react-router";
 
-function AddReview({ handleShowAddReview, placeId }) {
+function AddReview({ handleShowAddReview, placeId, placeName,handleEndOfAdding,forceUpdate }) {
+  const [reviewDetails, setReviewDetails] = useState({})
+
   const [files, setFiles] = useState("");
 
   const handleFilesChange = (e) => {
@@ -23,33 +26,35 @@ function AddReview({ handleShowAddReview, placeId }) {
   };
   const formik = useFormik({
     initialValues: {
-      rating: 5,
-      reviewBody: "",
+      rating: reviewDetails.rating || 5,
+      reviewBody: reviewDetails.reviewBody || "",
     },
     onSubmit: (values) => {
+
       const formDataToSend = new FormData();
       formDataToSend.append("rating", +values.rating);
       formDataToSend.append("reviewBody", values.reviewBody);
       formDataToSend.append("placeId", placeId);
-      
-      for(let i = 0; i < files.length; i++ ){
+      for (let i = 0; i < files.length; i++) {
         formDataToSend.append("reviewImages", files[i]);
       }
       console.log(formDataToSend);
 
       postReview(formDataToSend).then((data) => console.log("review added"));
-      // handleShowAddReview(false);
+      handleShowAddReview(false);
+      handleEndOfAdding(true)
     },
   });
 
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="border border-3 container"
+      className="container"
       encType="multipart/form-data"
     >
+      <h2 className='text-center text-decoration-underline fw-bolder'>{placeName}</h2>
       <Row>
-        <Col>
+        <Col lg="12">
           <Row>
             <Box
               component="fieldset"
@@ -62,6 +67,7 @@ function AddReview({ handleShowAddReview, placeId }) {
                 name="rating"
                 size="large"
                 value={formik.values.rating}
+                precision={1}
                 onChange={formik.handleChange}
                 onChangeActive={(event, newHover) => {
                   setHover(newHover);
@@ -75,8 +81,8 @@ function AddReview({ handleShowAddReview, placeId }) {
           </Row>
         </Col>
 
-        <Col>
-          <label htmlFor="reviewBody">Description</label>
+        <Col lg="12" className="mb-3">
+          <label htmlFor="reviewBody">Description: </label>
           <input
             id="reviewBody"
             name="reviewBody"
@@ -85,7 +91,7 @@ function AddReview({ handleShowAddReview, placeId }) {
             value={formik.values.reviewBody}
           />
         </Col>
-        <Col>
+        <Col lg="12" className="mb-3">
           <input
             type="file"
             name="reviewImages"
@@ -93,8 +99,16 @@ function AddReview({ handleShowAddReview, placeId }) {
             onChange={handleFilesChange}
           />
         </Col>
-        <Col>
-          <button type="submit">Submit</button>
+        {reviewDetails.images && <Col lg="12" className="mb-3">
+          <input
+            type="file"
+            name="reviewImages"
+            multiple
+            onChange={handleFilesChange}
+          />
+        </Col>}
+        <Col lg="12">
+          <Button type="submit" onClick={forceUpdate}>Submit</Button>
         </Col>
       </Row>
     </form>

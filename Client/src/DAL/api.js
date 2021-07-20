@@ -7,13 +7,23 @@ const config = { headers: {'Content-Type' : 'application/json','Access-Control-A
 const getPlaces = async () => {
     const data = await axios.get('http://localhost:9000/places',config)
     return data.data
-    
-        // let places = await fetch('http://localhost:9000/places')
-        // let response =  places.json()
-        // return response
 } 
+const updateReview = async (reviewId,values) => {
+    const data = await axios.put(`http://localhost:9000/reviews/${reviewId}`,values,config)
+    return data.data
+} 
+const deleteImageById = async (imageId) => {
+    const data = await axios.delete(`http://localhost:9000/images/${imageId}`,config)
+    return data.data
+} 
+
 const getPlaceById = async (placeId) => {
         let place = await fetch(`http://localhost:9000/places/${placeId}`)
+        let response =  place.json()
+        return response
+} 
+const getReviewById = async (reviewId) => {
+        let place = await fetch(`http://localhost:9000/reviews/${reviewId}`)
         let response =  place.json()
         return response
 } 
@@ -145,4 +155,4 @@ const getReviewsOfPlaceByPlaceId = async (placeId) => {
 
 // const Pagination = async (pageToShow = 1, numberOfObjectsInPage = 25)
 
-export {getUsers,updateUser,postUser,postReview,postPlace,getCategories,getPlaces,getUserByUserName,getImagesOfReviewsWithImageLikes,getPlaceById,getUserByUserId,getTags}
+export {deleteImageById,updateReview,getReviewById,getUsers,updateUser,postUser,postReview,postPlace,getCategories,getPlaces,getUserByUserName,getImagesOfReviewsWithImageLikes,getPlaceById,getUserByUserId,getTags}

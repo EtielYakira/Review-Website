@@ -14,10 +14,8 @@ import {useState} from 'react'
 import Sginout from './Sginout';
 
 
-function Header({expanded,handelExpanded,handleUser,user}) {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+function Header({expanded,handelExpanded,handleUser,user,show,handleClose,handleShow}) {
+
 
   const [showSignOut, setShowSignOut] = useState(false);
   const handleSignOutClose = () => setShowSignOut(false);
@@ -42,7 +40,6 @@ function Header({expanded,handelExpanded,handleUser,user}) {
         {!!user.name&&<NavDropdown title="Community Area" id="basic-nav-dropdown">
           <NavDropdown.Item as={Link} to='/Gallery' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>Gallery</NavDropdown.Item>
           <NavDropdown.Item as={Link} to='/LeaderBoard' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>Leader Board</NavDropdown.Item>
-          <NavDropdown.Item as={Link} to='/Something' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>Something</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item >My Reviews</NavDropdown.Item>
         </NavDropdown>}

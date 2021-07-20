@@ -45,7 +45,7 @@ function SignArea({ show, handleClose, handleUser, user }) {
         setTimeout(handleUserExisted("Username/password are Wrong, Try Again"),1000)
       }else{
         handleUserExisted("")
-        history.push("/")
+        // history.push("/")
         handleUser(data)
         handleClose()
       }

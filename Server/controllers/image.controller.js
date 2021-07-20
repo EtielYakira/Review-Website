@@ -33,3 +33,27 @@ exports.findAll = (req, res) => {
       })
       .catch((err) => console.log(err));
   };
+
+  exports.delete = (req, res) => {
+    const id = req.params.id;
+  
+    theImage.destroy({
+      where: { id: id },
+    })
+      .then((num) => {
+        if (num == 1) {
+          res.send({
+            message: "Image was deleted successfully!",
+          });
+        } else {
+          res.send({
+            message: `Cannot delete Image with id=${id}. Maybe Image was not found!`,
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: "Could not delete Tutorial with id=" + id,
+        });
+      });
+  };
