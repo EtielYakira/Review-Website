@@ -9,7 +9,7 @@ import HomePage from './Components/HomePage'
 import Place from './Components/Places'
 import Gallery from './Components/Community-Area/Gallery';
 import LeaderBoard from './Components/Community-Area/LeaderBoard';
-import Something from './Components/Community-Area/Something';
+import MyReviews from './Components/Community-Area/MyReviews';
 import {
   BrowserRouter as Router,
   Switch,
@@ -60,6 +60,7 @@ function App() {
       <Protected path='/profile' component={UserProfile}/>
      <Protected path='/Gallery' component={Gallery} />
      <Protected path='/LeaderBoard' component={LeaderBoard} />
+     <Protected path='/my-reviews' component={MyReviews} />
 
       <Route path='/SignUp'> 
         <SignUp handleUser={handleUser}/>

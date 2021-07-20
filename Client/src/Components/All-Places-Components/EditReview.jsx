@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import { Row, Col } from "react-bootstrap";
 import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
@@ -12,6 +12,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import {
   updateReview,
   deleteImageById,
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function EditReview({ review, handleClose, open }) {
+function EditReview({ review, handleClose, open ,handleEndOfAdding}) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles();
@@ -61,20 +62,21 @@ const handleFilesChange = (e) => {
   };
   const formik = useFormik({
     initialValues: {
-      rating: +review.rating || 1,
-      reviewBody: review.reviewBody || "",
+      rating: review.rating ,
+      reviewBody: review.reviewBody ,
     },
     onSubmit: (values) => {
-      const formDataToSend = new FormData();
-        formDataToSend.append("rating", +values.rating);
-        formDataToSend.append("reviewBody", values.reviewBody);
+      const formDataToSend = new FormData(); 
+        formDataToSend.append("rating", +values.rating || review.rating );
+        formDataToSend.append("reviewBody", values.reviewBody || review.reviewBody);
         for (let i = 0; i < files.length; i++) {
           formDataToSend.append("reviewImages", files[i]);
         }
         console.log(imagesToDelete);
       imagesToDelete.forEach(image => deleteImageById(image))
-        updateReview(review.id,formDataToSend).then(data => console.log('UPDATE REVIEW'))
+      updateReview(review.id,formDataToSend).then(data => console.log('UPDATE REVIEW'))
       handleClose(false);
+      handleEndOfAdding(true)
     },
   });
 
@@ -90,6 +92,7 @@ const handleFilesChange = (e) => {
       </DialogTitle>
       <DialogContent>
         <form
+         enableReinitialize={true}
           onSubmit={formik.handleSubmit}
           className="container"
           encType="multipart/form-data"
@@ -107,7 +110,7 @@ const handleFilesChange = (e) => {
                   <Rating
                     name="rating"
                     size="large"
-                    // value={formik.values.rating}
+                    value={formik.values.rating}
                     defaultValue={+review.rating}
                     onChange={formik.handleChange}
                     onChangeActive={(event, newHover) => {
@@ -125,15 +128,22 @@ const handleFilesChange = (e) => {
             </Col>
 
             <Col lg="12" className="mb-3">
-              <label htmlFor="reviewBody">Description: </label>
-              <input
+              <label htmlFor="reviewBody" className='d-block'>Description: </label>
+              {/* <input
                 id="reviewBody"
                 name="reviewBody"
                 type="text"
                 onChange={formik.handleChange}
-                // value={formik.values.reviewBody}
                 defaultValue={review.reviewBody}
-              />
+                value={formik.values.reviewBody}
+              /> */}
+            <TextareaAutosize
+            minRows={3}
+            name="reviewBody"
+            onChange={formik.handleChange}
+            defaultValue={review.reviewBody}
+            value={formik.values.reviewBody}
+          />
             </Col>
             <Col lg="12" className="mb-3">
               <input
@@ -148,7 +158,7 @@ const handleFilesChange = (e) => {
                 <Row>
                   {review.images.map((image) => {
                     return (
-                      <Col name={image.id}>
+                      <Col name={image.id} sm='12' md='12'>
                         <Chip
                           label="Delete Image"
                           name={image.id}
@@ -161,28 +171,26 @@ const handleFilesChange = (e) => {
                           }
                           color="primary"
                         />
-                        <img src={`../uploads/${image.image}`} alt={image.id} />
+                        <img src={`../uploads/${image.image}`} alt={image.id} style={{width:'100px'}} />
                       </Col>
                     );
                   })}
                 </Row>
               </Col>
             )}
-            <Col lg="12">
-              <Button type="submit">Submit</Button>
-            </Col>
           </Row>
-        </form>
-      </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleClose} color="primary" autoFocus>
+        <Button onClick={handleClose} type="submit" color="primary" autoFocus>
           Submit Changes
         </Button>
       </DialogActions>
+        </form>
+      </DialogContent>
     </Dialog>
+
   );
 }
 

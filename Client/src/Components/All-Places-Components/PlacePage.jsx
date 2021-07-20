@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useEffect , useReducer} from "react";
+import { useEffect, useReducer } from "react";
 import { useParams } from "react-router";
 import { getPlaceById } from "../../DAL/api";
 import ReviewsList from "./ReviewsList";
@@ -41,18 +41,18 @@ function PlacePage({ handleShow }) {
   const [endOfAdding, setEndOfAdding] = useState(false);
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
-  
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
+    forceUpdate();
     setOpen(false);
   };
   const handleCurrentReview = (value) => {
     setReviewDetails(value);
-    handleClickOpen()
-  }
+    handleClickOpen();
+  };
 
   const classes = useStyles();
   const [addReview, setAddReview] = useState(false);
@@ -66,6 +66,7 @@ function PlacePage({ handleShow }) {
   });
 
   const handlePlace = (data) => setPlace(data);
+
   useEffect(() => {
     setEndOfAdding(false);
     getPlaceById(placeId).then((data) => {
@@ -205,7 +206,7 @@ function PlacePage({ handleShow }) {
         <Fade in={addReview}>
           <div className={classes.paper}>
             <AddReview
-            forceUpdate={forceUpdate}
+              forceUpdate={forceUpdate}
               handleShowAddReview={handleShowAddReview}
               placeId={placeId}
               placeName={place.name}
@@ -232,10 +233,18 @@ function PlacePage({ handleShow }) {
           placeId={placeId}
         />
       )} */}
-      <EditReview handleClose={handleClose} open={open} review={reviewDetails}/>
+      <EditReview
+        handleClose={handleClose}
+        open={open}
+        review={reviewDetails}
+      />
       {place.reviews ? (
         <ReviewsList
-        handleCurrentReview={handleCurrentReview}
+          handleClose={handleClose}
+          open={open}
+          review={reviewDetails}
+          placeId={place.id}
+          handleCurrentReview={handleCurrentReview}
           reviews={place.reviews}
           className="container"
         />

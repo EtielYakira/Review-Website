@@ -41,7 +41,7 @@ function Header({expanded,handelExpanded,handleUser,user,show,handleClose,handle
           <NavDropdown.Item as={Link} to='/Gallery' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>Gallery</NavDropdown.Item>
           <NavDropdown.Item as={Link} to='/LeaderBoard' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>Leader Board</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item >My Reviews</NavDropdown.Item>
+          <NavDropdown.Item as={Link} to='/my-reviews' onClick={() => setTimeout(() => {handelExpanded(false)}, 150)}>My Reviews</NavDropdown.Item>
         </NavDropdown>}
       </Nav>
 

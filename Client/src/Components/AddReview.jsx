@@ -4,11 +4,23 @@ import { Row, Col, Button } from "react-bootstrap";
 import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { postReview,getReviewById,updateReview,deleteImageById} from "../DAL/api";
+import {
+  postReview,
+  getReviewById,
+  updateReview,
+  deleteImageById,
+} from "../DAL/api";
 import { useHistory } from "react-router";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
-function AddReview({ handleShowAddReview, placeId, placeName,handleEndOfAdding,forceUpdate }) {
-  const [reviewDetails, setReviewDetails] = useState({})
+function AddReview({
+  handleShowAddReview,
+  placeId,
+  placeName,
+  handleEndOfAdding,
+  forceUpdate,
+}) {
+  const [reviewDetails, setReviewDetails] = useState({});
 
   const [files, setFiles] = useState("");
 
@@ -30,7 +42,6 @@ function AddReview({ handleShowAddReview, placeId, placeName,handleEndOfAdding,f
       reviewBody: reviewDetails.reviewBody || "",
     },
     onSubmit: (values) => {
-
       const formDataToSend = new FormData();
       formDataToSend.append("rating", +values.rating);
       formDataToSend.append("reviewBody", values.reviewBody);
@@ -38,11 +49,10 @@ function AddReview({ handleShowAddReview, placeId, placeName,handleEndOfAdding,f
       for (let i = 0; i < files.length; i++) {
         formDataToSend.append("reviewImages", files[i]);
       }
-      console.log(formDataToSend);
 
       postReview(formDataToSend).then((data) => console.log("review added"));
       handleShowAddReview(false);
-      handleEndOfAdding(true)
+      handleEndOfAdding(true);
     },
   });
 
@@ -52,7 +62,9 @@ function AddReview({ handleShowAddReview, placeId, placeName,handleEndOfAdding,f
       className="container"
       encType="multipart/form-data"
     >
-      <h2 className='text-center text-decoration-underline fw-bolder'>{placeName}</h2>
+      <h2 className="text-center text-decoration-underline fw-bolder">
+        {placeName}
+      </h2>
       <Row>
         <Col lg="12">
           <Row>
@@ -82,14 +94,22 @@ function AddReview({ handleShowAddReview, placeId, placeName,handleEndOfAdding,f
         </Col>
 
         <Col lg="12" className="mb-3">
-          <label htmlFor="reviewBody">Description: </label>
-          <input
+          <label htmlFor="reviewBody" className="d-block">
+            Description:{" "}
+          </label>
+          <TextareaAutosize
+            minRows={3}
+            name="reviewBody"
+            onChange={formik.handleChange}
+            value={formik.values.reviewBody}
+          />
+          {/* <input
             id="reviewBody"
             name="reviewBody"
             type="text"
             onChange={formik.handleChange}
             value={formik.values.reviewBody}
-          />
+          /> */}
         </Col>
         <Col lg="12" className="mb-3">
           <input
@@ -99,16 +119,20 @@ function AddReview({ handleShowAddReview, placeId, placeName,handleEndOfAdding,f
             onChange={handleFilesChange}
           />
         </Col>
-        {reviewDetails.images && <Col lg="12" className="mb-3">
-          <input
-            type="file"
-            name="reviewImages"
-            multiple
-            onChange={handleFilesChange}
-          />
-        </Col>}
+        {reviewDetails.images && (
+          <Col lg="12" className="mb-3">
+            <input
+              type="file"
+              name="reviewImages"
+              multiple
+              onChange={handleFilesChange}
+            />
+          </Col>
+        )}
         <Col lg="12">
-          <Button type="submit" onClick={forceUpdate}>Submit</Button>
+          <Button type="submit" onClick={forceUpdate}>
+            Submit
+          </Button>
         </Col>
       </Row>
     </form>

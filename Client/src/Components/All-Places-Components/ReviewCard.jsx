@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Cookies from "js-cookie";
 import EditIcon from "@material-ui/icons/Edit";
 
-function ReviewCard({ review, index, handleEditReview, handleCurrentReview }) {
+function ReviewCard({ review, index, handleEditReview, handleCurrentReview ,handleReview,handleOpenEdit, open ,handleCurrReview }) {
   const [user, setUser] = useState({ name: "" });
   const handleUser = (userDetailes) => setUser(userDetailes);
 
@@ -19,7 +19,7 @@ function ReviewCard({ review, index, handleEditReview, handleCurrentReview }) {
     });
   }, []);
   return (
-    <li className="">
+    <li className="" id={Cookies.get("session_id") ? JSON.parse(Cookies.get("session_id")).id : ''} >
       <Card>
         <Card.Header>
           <Row>
@@ -33,9 +33,10 @@ function ReviewCard({ review, index, handleEditReview, handleCurrentReview }) {
               <span className="">reviewed at {review.postDate}</span>
             </Col>
             <Col lg="1">
-              {user.name === JSON.parse(Cookies.get("session_id")).name ? (
+              {user.name === (Cookies.get("session_id") && JSON.parse(Cookies.get("session_id")).name) ? (
                 <IconButton aria-label="edit" onClick={() => {
-                  console.log('HI AM OPEN');
+                  handleOpenEdit()
+                  handleCurrReview(review)
                   handleCurrentReview(review)
                   }
                   } >

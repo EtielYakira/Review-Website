@@ -22,8 +22,11 @@ function UserProfile() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleShowSuccess = (showSuccess) => setShowSuccess(!showSuccess);
-  const changeTo = () => {
-    setMove(!move);
+  const changeTo1 = () => {
+    setMove(false);
+  };
+  const changeTo2 = () => {
+    setMove(true);
   };
   const { user } = useContext(AuthApi);
   useEffect(() => {
@@ -38,6 +41,13 @@ function UserProfile() {
       .min(8, "password must have at least 8 characters")
       .max(255, "how can you remember password so long??")
       .required("Required"),
+    oldPassword: yup
+      .string()
+      .min(8, "password must have at least 8 characters")
+      .max(255, "how can you remember password so long??")
+      .oneOf([userDetails.password],'password not match')
+      .required("Required"),
+      
   });
 
   const formik = useFormik({
@@ -74,12 +84,12 @@ function UserProfile() {
 
       <Nav variant="tabs" defaultActiveKey="/profile">
         <Nav.Item>
-          <Nav.Link onClick={changeTo} eventKey="POSTS">
-            post by you
+          <Nav.Link onClick={changeTo1} eventKey="POSTS">
+            Your Analytics
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={changeTo} eventKey="settings">
+          <Nav.Link onClick={changeTo2} eventKey="settings">
             Settings
           </Nav.Link>
         </Nav.Item>
@@ -88,7 +98,7 @@ function UserProfile() {
 
 <Row className='container-fluid'>
   <Col className='mx-auto text-center w-100 h-100'>
-    <h2>Your Review Jquery</h2>
+    <h2>Rating Over Time</h2>
     <ResponsiveContainer   width={'100%'} height={400}>
 <LineChart
 
@@ -184,12 +194,17 @@ function UserProfile() {
               Old Password
             </Form.Label>
             <Col sm="10">
-              {!oldPassMatch &&
+            {formik.errors.oldPassword || formik.values.oldPassword === userDetails.password ? (
+                <div className="alert-danger text-danger text-center">
+                  {formik.errors.oldPassword}
+                </div>
+              ) : null}
+              {/* {!oldPassMatch && formik.touched.oldPassword &&
               formik.values.oldPassword === userDetails.password ? null : (
                 <div className="alert-danger text-danger text-center">
                   its not the as your old password
                 </div>
-              )}
+              )} */}
               <Form.Control
                 type="password"
                 placeholder="Old Password"
