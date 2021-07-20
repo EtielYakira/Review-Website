@@ -30,7 +30,12 @@ function App() {
   const [user, setUser] = useState(Cookies.get('session_id') ? JSON.parse(Cookies.get('session_id')) : '')
   const [expanded, setExpanded] = useState(false);
   const handleUser = (userId) => setUser(userId) 
-  console.log(user)
+
+
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 
   const handelExpanded = (val) => setExpanded(val)
@@ -38,7 +43,7 @@ function App() {
       <Router >
     <div className="App">
       
-      <Header expanded={expanded} handelExpanded={handelExpanded} user={user} handleUser={handleUser}/>
+      <Header expanded={expanded} handelExpanded={handelExpanded} user={user} handleUser={handleUser} handleShow={handleShow} handleClose={handleClose} show={show}/>
 
       <Switch>
       <Route exact path='/'> 
@@ -50,12 +55,11 @@ function App() {
       </Route>
       
       <Route path='/places'> 
-        <Place/>
+        <Place handleShow={handleShow}/>
       </Route>
       <Protected path='/profile' component={UserProfile}/>
      <Protected path='/Gallery' component={Gallery} />
      <Protected path='/LeaderBoard' component={LeaderBoard} />
-     <Protected path='/Something' component={Something} />
 
       <Route path='/SignUp'> 
         <SignUp handleUser={handleUser}/>

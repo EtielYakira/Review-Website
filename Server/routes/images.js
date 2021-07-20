@@ -8,4 +8,6 @@ const places = require("../controllers/place.controller.js");
 
 router.route('/')
       .get(places.findAllForGallery)
+router.route('/:id')
+      .delete(images.delete)
 module.exports = router;

@@ -60,7 +60,7 @@ const handleSearch = e =>{
     let target = e.target
     setFilterFn({
         fn: places =>{
-            if(target.value == "")
+            if(target.value === "")
                 return places;
                 else
                 return places.filter(place => place.name.toLowerCase().includes(target.value.toLowerCase()))

@@ -72,7 +72,7 @@ exports.findPlaceById = (req, res) => {
           {
             model: Image,
             as: "images",
-            attributes: ["image"],
+            attributes: ["id","image"],
           },
         ],
       },
@@ -172,7 +172,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Tutorial.destroy({
+  Place.destroy({
     where: { id: id },
   })
     .then((num) => {
