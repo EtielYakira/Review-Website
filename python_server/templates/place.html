@@ -1,0 +1,88 @@
+
+{% extends 'base.html' %}
+    {% block title %}
+      YO Page
+    {% endblock %}
+
+{% block content %}
+<p> {{  places_to_show }}</p>
+
+<div class="component">
+      <div class="container row mt-5 mx-auto">
+        <div class="col-md-6 mb-4">
+          <div id=""></div>
+          <div class="">
+            <div class="row mx-1">
+              <div class="col-12 mb-0">
+                <figure class="">
+                  <img
+                    src="/static/{{ the_place.image }}"
+                    class="img-fluid rounded border border-dark"
+                  />
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 container">
+          <h5 class="bolder">
+            {{the_place.name}}
+          </h5>
+          <p class="mb-2 text-muted small">owned by: {{the_place.name}}</p>
+          <h3 class="">
+
+
+
+          </h3>
+          <p>
+            <span class="mr-1">
+
+            </span>
+          </p>
+
+          <p class="pt-1">
+
+          </p>
+          <div class="">
+            <table class="table table-sm table-borderless mb-0">
+              <tbody>
+                <tr>
+                  <th class="pl-0 w-25" scope="row">
+                    <strong>Address</strong>
+                  </th>
+                  <td>
+                      {{the_place.name}}
+                  </td>
+                </tr>
+                <tr>
+                  <th class="pl-0 w-25" scope="row">
+                    <strong>Opens at:</strong>
+                  </th>
+                  <td>{{the_place.name}}</td>
+                </tr>
+                <tr>
+                  <th class="pl-0 w-25" scope="row">
+                    <strong>Closes at:</strong>
+                  </th>
+                  <td>{{the_place.name}}</td>
+                </tr>
+                <tr>
+                  <th class="pl-0 w-25" scope="row">
+                    <strong>Establish at:</strong>
+                  </th>
+                  <td>{{the_place.name}}</td>
+                </tr>
+                <tr>
+                  <th class="pl-0 w-25" scope="row"></th>
+                  <td>
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}
+
